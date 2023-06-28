@@ -3,7 +3,6 @@ import re
 
 # Создаем класс
 class Operation:
-    """инициализируем класс"""
     def __init__(self, pk, date, state, op_amount, description, fro, to):
         self.pk = pk
         self.date = self.edit_date_time(date)
