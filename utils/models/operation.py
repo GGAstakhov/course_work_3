@@ -1,8 +1,9 @@
 import datetime
 import re
 
-
+# Создаем класс
 class Operation:
+    """инициализируем класс"""
     def __init__(self, pk, date, state, op_amount, description, fro, to):
         self.pk = pk
         self.date = self.edit_date_time(date)
@@ -13,12 +14,19 @@ class Operation:
         self.to = self.get_hidden_numbers(to)
 
     def edit_date_time(self, date):
+        """метод преобразует полученную
+        дату в требуемый формат
+        и возвращает ее"""
         date_format = '%Y-%m-%dT%H:%M:%S.%f'
         date = datetime.datetime.strptime(date, date_format)
         edited_date = datetime.datetime.strftime(date, '%d.%m.%Y')
         return edited_date
 
     def get_hidden_numbers(self, number):
+        """метод форматирует номер
+        карты или счета
+        в требуемый формат
+        и возвращает отредактированный номер"""
         if number.startswith('Счет'):
             delete_word = re.sub(r'[a-z]+\s?', '', number.lower()).strip()
             delete_digit = re.sub(r'\d+\s?', '', number).strip()
@@ -32,5 +40,6 @@ class Operation:
         return f"{delete_digit} {replace_stars}"
 
     def __str__(self):
+        """метод возвращает статистику"""
         value = self.op_amount["amount"] + " " + self.op_amount["currency"]["name"]
         return f'{self.date} {self.description}\n {self.fro} -> {self.to}\n {value}'
